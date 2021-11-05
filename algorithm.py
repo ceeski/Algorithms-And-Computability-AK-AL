@@ -33,6 +33,13 @@ def GenerateMatrixFromSequenceCombination(matrix, sequence):
             returnedMatrix[i][j] = matrix[sequence[i]][sequence[j]]
     return returnedMatrix
 
+def RevertRearrangedMatrix(rearrangedMatrix, sequence):
+    returnedMatrix = [[0 for _ in range(len(sequence))]
+                      for _ in range(len(sequence))]
+    for i in range(len(sequence)):
+        for j in range(len(sequence)):
+            returnedMatrix[sequence[i]][sequence[j]] = rearrangedMatrix[i][j]
+    return returnedMatrix
 
 def CalculateCommonEdges(matrix, smallerMatrixSize):
     commonEdges = 0
@@ -120,8 +127,28 @@ def SaveAnswer(commonEdges, mappingSequence, graph, approximate):
         else:
             f.write("EXACT"+ '\n')
         f.write(str(commonEdges)+ '\n')
-        f.write(" ".join(str(j) for j in mappingSequence)+ '\n')
+        f.write(" ".join(str(j) for j in mappingSequence)+ '\n\n')
         for row in graph:
+            f.write(" ".join(str(item) for item in row) + '\n')
+        graph2 = RevertRearrangedMatrix(graph, mappingSequence)
+        f.write("\n")
+        for row in graph2:
+            f.write(" ".join(str(item) for item in row) + '\n')
+
+def SaveAnswerWithNames(commonEdges, mappingSequence, graph, approximate):
+    with open('answer_named.txt', 'w') as f:
+        if approximate:
+            f.write("APPROXIMATE"+ '\n\n')
+        else:
+            f.write("EXACT"+ '\n\n')
+        f.write("Common Edges\n"+str(commonEdges)+ '\n\n')
+        f.write("Mapping Sequence\n"+" ".join(str(j) for j in mappingSequence)+ '\n')
+        f.write("\nGraph\n")
+        for row in graph:
+            f.write(" ".join(str(item) for item in row) + '\n')
+        graph2 = RevertRearrangedMatrix(graph, mappingSequence)
+        f.write("\nMapped Sequence on the Lrger Graph\n")
+        for row in graph2:
             f.write(" ".join(str(item) for item in row) + '\n')
 
 # Algorithm
@@ -164,6 +191,8 @@ def main(input_list: List[str]) -> None:
                 smallestCommonSupergaph = rearrangedMatrix
 
         SaveAnswer(mostMatchingEdges, mostMatchingSequence,
+                smallestCommonSupergaph, approximate)
+        SaveAnswerWithNames(mostMatchingEdges, mostMatchingSequence,
                 smallestCommonSupergaph, approximate)
 
 if __name__ == "__main__":
