@@ -6,7 +6,28 @@ Common Edges
 Mapping Sequence
 0 1 2 3 4 8 5 6 7
 
-Graph
+Smaller original graph
+0 1 0 0 1 1 0 1
+1 0 1 0 1 1 0 1
+0 1 0 1 0 1 0 1
+0 0 1 0 1 1 0 1
+1 1 0 1 0 1 0 1
+1 1 1 1 1 1 0 1
+0 0 0 0 0 0 0 1
+1 1 1 1 1 1 1 1
+
+Larger original graph
+0 1 0 0 1 0 0 1 1
+1 0 1 0 1 0 0 1 1
+0 1 0 1 0 0 0 1 1
+0 0 1 0 1 0 0 1 1
+1 1 0 1 0 0 0 1 1
+0 0 0 0 0 0 0 1 1
+1 1 1 1 1 1 1 1 1
+0 0 0 0 0 0 0 1 1
+1 1 1 1 1 1 1 1 1
+
+Mapped Sequence on the Larger Graph
 0 2 0 0 2 2 0 1 1
 2 0 2 0 2 2 0 1 1
 0 2 0 2 0 2 0 1 1
@@ -17,7 +38,7 @@ Graph
 2 2 2 2 2 2 2 2 1
 0 0 0 0 0 1 0 0 1
 
-Mapped Sequence on the Lrger Graph
+Common subgraph/supergraph on larger graph
 0 2 0 0 2 0 1 1 2
 2 0 2 0 2 0 1 1 2
 0 2 0 2 0 0 1 1 2
