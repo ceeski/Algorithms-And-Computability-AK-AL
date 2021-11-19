@@ -164,41 +164,42 @@ def main(input_list: List[str]) -> None:
         opts = [opt for opt in input_list if opt.startswith("-")]
         input_file = Path(input_list[0])
         if not input_file.is_file():
-            print("Wrong file!")        
-        approximate = 0
-        if "-a" in opts:
-            approximate = 1
+            print("Wrong file!")
+        else :        
+            approximate = 0
+            if "-a" in opts:
+                approximate = 1
 
-        (biggerMatrix, biggerMatrixSize, smallerMatrix,smallerMatrixSize) = ReadMatrices(input_file)
+            (biggerMatrix, biggerMatrixSize, smallerMatrix,smallerMatrixSize) = ReadMatrices(input_file)
 
-        sequenceList = []
+            sequenceList = []
 
-        if approximate:
-            sequenceList = [GenerateApproximateSequence(
-                biggerMatrix, biggerMatrixSize, smallerMatrix, smallerMatrixSize)]
-        else:
-            CreateSequences(sequenceList, GenerateBaseSequence(biggerMatrixSize))
+            if approximate:
+                sequenceList = [GenerateApproximateSequence(
+                    biggerMatrix, biggerMatrixSize, smallerMatrix, smallerMatrixSize)]
+            else:
+                CreateSequences(sequenceList, GenerateBaseSequence(biggerMatrixSize))
 
-        mostMatchingSequence = []
-        smallestCommonSupergaph = []
-        mostMatchingEdges = 0
+            mostMatchingSequence = []
+            smallestCommonSupergaph = []
+            mostMatchingEdges = 0
 
-        for sequence in sequenceList:
-            rearrangedMatrix = GenerateMatrixFromSequenceCombination(
-                biggerMatrix, sequence)
-            for i in range(smallerMatrixSize):
-                for j in range(smallerMatrixSize):
-                    rearrangedMatrix[i][j] += smallerMatrix[i][j]
-            commonEdges = CalculateCommonEdges(rearrangedMatrix, smallerMatrixSize)
-            if commonEdges > mostMatchingEdges:
-                mostMatchingEdges = commonEdges
-                mostMatchingSequence = sequence
-                smallestCommonSupergaph = rearrangedMatrix
+            for sequence in sequenceList:
+                rearrangedMatrix = GenerateMatrixFromSequenceCombination(
+                    biggerMatrix, sequence)
+                for i in range(smallerMatrixSize):
+                    for j in range(smallerMatrixSize):
+                        rearrangedMatrix[i][j] += smallerMatrix[i][j]
+                commonEdges = CalculateCommonEdges(rearrangedMatrix, smallerMatrixSize)
+                if commonEdges > mostMatchingEdges:
+                    mostMatchingEdges = commonEdges
+                    mostMatchingSequence = sequence
+                    smallestCommonSupergaph = rearrangedMatrix
 
-        SaveAnswer(mostMatchingEdges, mostMatchingSequence,
-                smallestCommonSupergaph, approximate)
-        SaveAnswerWithNames(mostMatchingEdges, mostMatchingSequence,
-                smallestCommonSupergaph, approximate, smallerMatrix, biggerMatrix)
+            SaveAnswer(mostMatchingEdges, mostMatchingSequence,
+                    smallestCommonSupergaph, approximate)
+            SaveAnswerWithNames(mostMatchingEdges, mostMatchingSequence,
+                    smallestCommonSupergaph, approximate, smallerMatrix, biggerMatrix)
 
 if __name__ == "__main__":
     main(sys.argv[1:])
