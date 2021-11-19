@@ -5,7 +5,6 @@ import sys
 from pathlib import Path
 
 USAGE = f"Usage: python {sys.argv[0]} [filename | filename -a | filename -e]"
-#no option results in exact solution
 
 # Helper functions
 
@@ -135,7 +134,7 @@ def SaveAnswer(commonEdges, mappingSequence, graph, approximate):
         for row in graph2:
             f.write(" ".join(str(item) for item in row) + '\n')
 
-def SaveAnswerWithNames(commonEdges, mappingSequence, graph, approximate):
+def SaveAnswerWithNames(commonEdges, mappingSequence, graph, approximate, small, larger):
     with open('answer_named.txt', 'w') as f:
         if approximate:
             f.write("APPROXIMATE"+ '\n\n')
@@ -143,11 +142,17 @@ def SaveAnswerWithNames(commonEdges, mappingSequence, graph, approximate):
             f.write("EXACT"+ '\n\n')
         f.write("Common Edges\n"+str(commonEdges)+ '\n\n')
         f.write("Mapping Sequence\n"+" ".join(str(j) for j in mappingSequence)+ '\n')
-        f.write("\nGraph\n")
+        f.write("\nSmaller original graph\n")
+        for row in small:
+            f.write(" ".join(str(item) for item in row) + '\n')
+        f.write("\nLarger original graph\n")
+        for row in larger:
+            f.write(" ".join(str(item) for item in row) + '\n')    
+        f.write("Mapped Sequence on the Larger Graph\n")
         for row in graph:
             f.write(" ".join(str(item) for item in row) + '\n')
         graph2 = RevertRearrangedMatrix(graph, mappingSequence)
-        f.write("\nMapped Sequence on the Lrger Graph\n")
+        f.write("\nCommon subgraph/supergraph on larger graph\n")
         for row in graph2:
             f.write(" ".join(str(item) for item in row) + '\n')
 
@@ -193,7 +198,7 @@ def main(input_list: List[str]) -> None:
         SaveAnswer(mostMatchingEdges, mostMatchingSequence,
                 smallestCommonSupergaph, approximate)
         SaveAnswerWithNames(mostMatchingEdges, mostMatchingSequence,
-                smallestCommonSupergaph, approximate)
+                smallestCommonSupergaph, approximate, smallerMatrix, biggerMatrix)
 
 if __name__ == "__main__":
     main(sys.argv[1:])
