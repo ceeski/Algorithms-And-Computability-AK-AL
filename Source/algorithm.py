@@ -1,3 +1,6 @@
+from genericpath import exists
+import os
+import time
 from typing import List
 import hashlib
 import pathlib
@@ -7,7 +10,6 @@ from pathlib import Path
 USAGE = f"Usage: python {sys.argv[0]} [filename | filename -a | filename -e]"
 
 # Helper functions
-
 
 def GenerateBaseSequence(size):
     return [i for i in range(size)]
@@ -19,8 +21,7 @@ def CreateSequences(sequencesList, baseSequence, firstElement=0):
     else:
         for i in range(firstElement, len(baseSequence)):
             baseSequence[i], baseSequence[firstElement] = baseSequence[firstElement], baseSequence[i]
-            CreateSequences(sequencesList, baseSequence.copy(),
-                            firstElement + 1)
+            CreateSequences(sequencesList, baseSequence.copy(), firstElement + 1)
             baseSequence[i], baseSequence[firstElement] = baseSequence[firstElement], baseSequence[i]
 
 
@@ -79,10 +80,8 @@ def GenerateSequenceOfLabelsFromMaxDegree(matrix, matrixSize):
 
 
 def GenerateApproximateSequence(matrixBigger, matrixBiggerSize, matrixSmaller, matrixSmallerSize):
-    sequenceBigger = GenerateSequenceOfLabelsFromMaxDegree(
-        matrixBigger, matrixBiggerSize)
-    sequenceSmaller = GenerateSequenceOfLabelsFromMaxDegree(
-        matrixSmaller, matrixSmallerSize)
+    sequenceBigger = GenerateSequenceOfLabelsFromMaxDegree(matrixBigger, matrixBiggerSize)
+    sequenceSmaller = GenerateSequenceOfLabelsFromMaxDegree(matrixSmaller, matrixSmallerSize)
     realSequence = [-1 for i in range(matrixBiggerSize)]
     for i, j in zip(sequenceSmaller, range(len(sequenceSmaller))):
         realSequence[i] = sequenceBigger[j]
@@ -158,48 +157,49 @@ def SaveAnswerWithNames(commonEdges, mappingSequence, graph, approximate, small,
 
 # Algorithm
 def main(input_list: List[str]) -> None:
-    if len(input_list) < 1:
-        print(USAGE)
+    get_input = input("If you ever want to exit the program, press CLTR + C.\nPlease input path to the file - for example \'./Examples/GraphSize10.txt\'.\n")
+    input_file = os.path.abspath(get_input)
+    input_file = input_file.replace("\EXE","")
+    print(input_file)
+    if not exists(input_file) or get_input == "":
+        print("File does not exist! Exit the program.")
+        time.sleep(4)
+        sys.exit(1)
     else:
-        opts = [opt for opt in input_list if opt.startswith("-")]
-        input_file = Path(input_list[0])
-        if not input_file.is_file():
-            print("Wrong file!")
-        else :        
+        get_input = input("Please input \'-a\' for approximate solution or \'-e\' for exact solution.\n")
+        if "-a" in get_input.strip():
+            approximate = 1
+        else:
             approximate = 0
-            if "-a" in opts:
-                approximate = 1
+        (biggerMatrix, biggerMatrixSize, smallerMatrix,smallerMatrixSize) = ReadMatrices(input_file)
+        sequenceList = []
 
-            (biggerMatrix, biggerMatrixSize, smallerMatrix,smallerMatrixSize) = ReadMatrices(input_file)
+        if approximate:
+            sequenceList = [GenerateApproximateSequence(biggerMatrix, biggerMatrixSize, smallerMatrix, smallerMatrixSize)]
+        else:
+            CreateSequences(sequenceList, GenerateBaseSequence(biggerMatrixSize))
 
-            sequenceList = []
+        mostMatchingSequence = []
+        smallestCommonSupergaph = []
+        mostMatchingEdges = 0
 
-            if approximate:
-                sequenceList = [GenerateApproximateSequence(
-                    biggerMatrix, biggerMatrixSize, smallerMatrix, smallerMatrixSize)]
-            else:
-                CreateSequences(sequenceList, GenerateBaseSequence(biggerMatrixSize))
+        for sequence in sequenceList:
+            rearrangedMatrix = GenerateMatrixFromSequenceCombination(biggerMatrix, sequence)
+            for i in range(smallerMatrixSize):
+                for j in range(smallerMatrixSize):
+                    rearrangedMatrix[i][j] += smallerMatrix[i][j]
+            commonEdges = CalculateCommonEdges(rearrangedMatrix, smallerMatrixSize)
+            if commonEdges > mostMatchingEdges:
+                mostMatchingEdges = commonEdges
+                mostMatchingSequence = sequence
+                smallestCommonSupergaph = rearrangedMatrix
 
-            mostMatchingSequence = []
-            smallestCommonSupergaph = []
-            mostMatchingEdges = 0
-
-            for sequence in sequenceList:
-                rearrangedMatrix = GenerateMatrixFromSequenceCombination(
-                    biggerMatrix, sequence)
-                for i in range(smallerMatrixSize):
-                    for j in range(smallerMatrixSize):
-                        rearrangedMatrix[i][j] += smallerMatrix[i][j]
-                commonEdges = CalculateCommonEdges(rearrangedMatrix, smallerMatrixSize)
-                if commonEdges > mostMatchingEdges:
-                    mostMatchingEdges = commonEdges
-                    mostMatchingSequence = sequence
-                    smallestCommonSupergaph = rearrangedMatrix
-
-            SaveAnswer(mostMatchingEdges, mostMatchingSequence,
-                    smallestCommonSupergaph, approximate)
-            SaveAnswerWithNames(mostMatchingEdges, mostMatchingSequence,
-                    smallestCommonSupergaph, approximate, smallerMatrix, biggerMatrix)
+        SaveAnswer(mostMatchingEdges, mostMatchingSequence, smallestCommonSupergaph, approximate)
+        SaveAnswerWithNames(mostMatchingEdges, mostMatchingSequence, smallestCommonSupergaph, approximate, smallerMatrix, biggerMatrix)   
+        time.sleep(5)
+        sys.exit(1)
 
 if __name__ == "__main__":
     main(sys.argv[1:])
+
+time.sleep(30)
