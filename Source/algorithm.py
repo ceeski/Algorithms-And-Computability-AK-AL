@@ -160,7 +160,6 @@ def main(input_list: List[str]) -> None:
     get_input = input("If you ever want to exit the program, press CLTR + C.\nPlease input path to the file - for example \'./Examples/GraphSize10.txt\'.\n")
     input_file = os.path.abspath(get_input)
     input_file = input_file.replace("\EXE","")
-    print(input_file)
     if not exists(input_file) or get_input == "":
         print("File does not exist! Exit the program.")
         time.sleep(4)
