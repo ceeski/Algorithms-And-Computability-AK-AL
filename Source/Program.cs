@@ -259,7 +259,7 @@ namespace AaC
                 SaveAnswer( mostMatchingEdges, mostMatchingSequence, smallestCommonSupergraph, approximate, smallerMatrix, biggerMatrix, biggerMatrixSize, watch.ElapsedMilliseconds );
 
             Console.WriteLine( $"Found common edges: {mostMatchingEdges}" );
-            Console.WriteLine( $"Ellapsed time: {watch.ElapsedMilliseconds}" );
+            Console.WriteLine( $"Ellapsed time: {watch.ElapsedMilliseconds}"+" ms" );
         }
     }
 }

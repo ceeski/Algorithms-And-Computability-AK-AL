@@ -5,3 +5,4 @@ C:\Users\a7kol\OneDrive\Pulpit\AlgorithmsFinal\Algorithms-And-Computability-AK-A
 C:\Users\a7kol\OneDrive\Pulpit\AlgorithmsFinal\Algorithms-And-Computability-AK-AL\Source\obj\Debug\AaC.csproj.CoreCompileInputs.cache
 C:\Users\a7kol\OneDrive\Pulpit\AlgorithmsFinal\Algorithms-And-Computability-AK-AL\Source\obj\Debug\AaC.exe
 C:\Users\a7kol\OneDrive\Pulpit\AlgorithmsFinal\Algorithms-And-Computability-AK-AL\Source\obj\Debug\AaC.pdb
+C:\Users\a7kol\OneDrive\Pulpit\AlgorithmsFinal\Algorithms-And-Computability-AK-AL\Source\obj\Debug\AaC.csproj.AssemblyReference.cache
