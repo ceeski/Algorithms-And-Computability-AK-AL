@@ -197,8 +197,8 @@ namespace AaC
             res += $"Bigger original graph:\n{GraphToString( biggerGraph )}\n\n";
             res += $"Mapped sequence on a larger graph:\n{GraphToString( graph )}\n\n";
             res += $"Common subgraph/supergraph on larger graph:\n{GraphToString( RevertRearrangedMatrix( graph, mappingSequence ) )}";
-            File.WriteAllText( "answer.txt", res );
             Console.Write(biggerMatrixSize < 26 ? res+"\n\n" : "The file was too large to print in the output. The results were saved in answer file.\n\n");
+            File.WriteAllText("answer.txt", res);
         }
 
         public static void Main( string[] args )
