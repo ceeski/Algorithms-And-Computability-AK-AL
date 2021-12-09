@@ -9,7 +9,7 @@ namespace AaC
 {
     class Program
     {
-        public const string usage = "Provide input file path. Add '-a' to use approximate algorithm. Add '-i' to skip producing output file.";
+        public const string usage = "Provide input file path. Add '-a' to use approximate algorithm. Add '-i' to skip producing output file.\n";
 
         private static List<int> GenerateBaseSequence(int size)
         {
@@ -208,7 +208,12 @@ namespace AaC
                 Console.WriteLine( usage );
                 return;
             }
-
+            if(!File.Exists(args[0]))
+            {
+                Console.WriteLine("The given file does not exist!\n");
+                Console.WriteLine(usage);
+                return;
+            }
             string inputPath = args[ 0 ];
 
             ReadMatrices( inputPath, out List<List<int>> biggerMatrix, out int biggerMatrixSize, out List<List<int>> smallerMatrix, out int smallerMatrixSize );
@@ -241,7 +246,7 @@ namespace AaC
                     }
                 }
                 int commonEdges = CalculateCommonEdges( rearrangedMatrix, smallerMatrixSize );
-                if(commonEdges > mostMatchingEdges)
+                if (commonEdges > mostMatchingEdges)
                 {
                     mostMatchingEdges = commonEdges;
                     mostMatchingSequence = sequence;
@@ -250,8 +255,7 @@ namespace AaC
             }
 
             watch.Stop();
-
-            if(!skipOutputFile)
+            if(!skipOutputFile && mostMatchingEdges!=0)
                 SaveAnswer( mostMatchingEdges, mostMatchingSequence, smallestCommonSupergraph, approximate, smallerMatrix, biggerMatrix, biggerMatrixSize, watch.ElapsedMilliseconds );
 
             Console.WriteLine( $"Found common edges: {mostMatchingEdges}" );
