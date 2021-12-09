@@ -1,0 +1,8 @@
+C:\Users\a7kol\OneDrive\Pulpit\AlgorithmsFinal\Algorithms-And-Computability-AK-AL\Source\bin\Debug\AaC.exe.config
+C:\Users\a7kol\OneDrive\Pulpit\AlgorithmsFinal\Algorithms-And-Computability-AK-AL\Source\bin\Debug\AaC.exe
+C:\Users\a7kol\OneDrive\Pulpit\AlgorithmsFinal\Algorithms-And-Computability-AK-AL\Source\bin\Debug\AaC.pdb
+C:\Users\a7kol\OneDrive\Pulpit\AlgorithmsFinal\Algorithms-And-Computability-AK-AL\Source\obj\Debug\AaC.csproj.AssemblyReference.cache
+C:\Users\a7kol\OneDrive\Pulpit\AlgorithmsFinal\Algorithms-And-Computability-AK-AL\Source\obj\Debug\AaC.csproj.SuggestedBindingRedirects.cache
+C:\Users\a7kol\OneDrive\Pulpit\AlgorithmsFinal\Algorithms-And-Computability-AK-AL\Source\obj\Debug\AaC.csproj.CoreCompileInputs.cache
+C:\Users\a7kol\OneDrive\Pulpit\AlgorithmsFinal\Algorithms-And-Computability-AK-AL\Source\obj\Debug\AaC.exe
+C:\Users\a7kol\OneDrive\Pulpit\AlgorithmsFinal\Algorithms-And-Computability-AK-AL\Source\obj\Debug\AaC.pdb

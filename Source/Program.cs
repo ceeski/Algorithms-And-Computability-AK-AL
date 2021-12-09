@@ -182,7 +182,7 @@ namespace AaC
             return res.Remove( res.Length - 1 );
         }
 
-        public static void SaveAnswer(int numberOfCommonEdges, List<int> mappingSequence, List<List<int>> graph, bool isApproximate, List<List<int>> smallerGraph, List<List<int>> biggerGraph, long executionTimeInMs)
+        public static void SaveAnswer(int numberOfCommonEdges, List<int> mappingSequence, List<List<int>> graph, bool isApproximate, List<List<int>> smallerGraph, List<List<int>> biggerGraph,int biggerMatrixSize, long executionTimeInMs)
         {
             string res = "";
             res += isApproximate ? "APPROXIMATE\n\n" : "EXACT\n\n";
@@ -198,6 +198,7 @@ namespace AaC
             res += $"Mapped sequence on a larger graph:\n{GraphToString( graph )}\n\n";
             res += $"Common subgraph/supergraph on larger graph:\n{GraphToString( RevertRearrangedMatrix( graph, mappingSequence ) )}";
             File.WriteAllText( "answer.txt", res );
+            Console.Write(biggerMatrixSize < 26 ? res+"\n\n" : "The file was too large to print in the output. The results were saved in answer file.\n\n");
         }
 
         public static void Main( string[] args )
@@ -251,7 +252,7 @@ namespace AaC
             watch.Stop();
 
             if(!skipOutputFile)
-                SaveAnswer( mostMatchingEdges, mostMatchingSequence, smallestCommonSupergraph, approximate, smallerMatrix, biggerMatrix, watch.ElapsedMilliseconds );
+                SaveAnswer( mostMatchingEdges, mostMatchingSequence, smallestCommonSupergraph, approximate, smallerMatrix, biggerMatrix, biggerMatrixSize, watch.ElapsedMilliseconds );
 
             Console.WriteLine( $"Found common edges: {mostMatchingEdges}" );
             Console.WriteLine( $"Ellapsed time: {watch.ElapsedMilliseconds}" );
